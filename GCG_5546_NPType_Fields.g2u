@@ -1,0 +1,503 @@
+Program.Sub.ScreenSU.Start
+Gui.NamePlateTypeFieldMap..Create
+Gui.NamePlateTypeFieldMap..Caption("Name Plate Type Field Map")
+Gui.NamePlateTypeFieldMap..Size(15360,10005)
+Gui.NamePlateTypeFieldMap..MinX(0)
+Gui.NamePlateTypeFieldMap..MinY(0)
+Gui.NamePlateTypeFieldMap..Position(0,0)
+Gui.NamePlateTypeFieldMap..BackColor(-2147483633)
+Gui.NamePlateTypeFieldMap..MousePointer(0)
+Gui.NamePlateTypeFieldMap..Event(UnLoad,NamePlateTypeFieldMap_UnLoad)
+Gui.NamePlateTypeFieldMap.lblType.Create(Label,"Type",True,1935,255,0,120,210,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.txtType.Create(TextBox,"",True,2685,300,0,120,450,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtType.Event(GotFocus,txtType_GotFocus)
+Gui.NamePlateTypeFieldMap.txtType.Event(LostFocus,txtType_LostFocus)
+Gui.NamePlateTypeFieldMap.cmdType.Create(Button)
+Gui.NamePlateTypeFieldMap.cmdType.Size(495,375)
+Gui.NamePlateTypeFieldMap.cmdType.Position(2895,420)
+Gui.NamePlateTypeFieldMap.cmdType.Caption("^")
+Gui.NamePlateTypeFieldMap.cmdType.Event(Click,cmdType_Click)
+Gui.NamePlateTypeFieldMap.cmdSave.Create(Button)
+Gui.NamePlateTypeFieldMap.cmdSave.Size(855,375)
+Gui.NamePlateTypeFieldMap.cmdSave.Position(105,8955)
+Gui.NamePlateTypeFieldMap.cmdSave.Caption("Save")
+Gui.NamePlateTypeFieldMap.cmdSave.Event(Click,cmdSave_Click)
+Gui.NamePlateTypeFieldMap.lblTxtInfo1.Create(Label,"Text Info 1:",True,1335,255,0,105,1005,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo2.Create(Label,"Text Info 2:",True,1335,255,0,105,1395,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo3.Create(Label,"Text Info 3:",True,1335,255,0,105,1800,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo4.Create(Label,"Text Info 4:",True,1335,255,0,105,2205,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo5.Create(Label,"Text Info 5:",True,1335,255,0,105,2595,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo6.Create(Label,"Text Info 6:",True,1335,255,0,105,3000,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo7.Create(Label,"Text Info 7:",True,1335,255,0,105,3405,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo8.Create(Label,"Text Info 8:",True,1335,255,0,105,3795,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo9.Create(Label,"Text Info 9:",True,1335,255,0,105,4200,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo10.Create(Label,"Text Info 10:",True,1335,255,0,105,4605,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo11.Create(Label,"Text Info 11:",True,1335,255,0,105,4995,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo12.Create(Label,"Text Info 12:",True,1335,255,0,105,5400,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo13.Create(Label,"Text Info 13:",True,1335,255,0,105,5805,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo14.Create(Label,"Text Info 14:",True,1335,255,0,105,6195,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo15.Create(Label,"Text Info 15:",True,1335,255,0,105,6600,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo16.Create(Label,"Text Info 16:",True,1335,255,0,105,7005,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo17.Create(Label,"Text Info 17:",True,1335,255,0,105,7395,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo18.Create(Label,"Text Info 18:",True,1335,255,0,105,7800,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo19.Create(Label,"Text Info 19:",True,1335,255,0,105,8205,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo20.Create(Label,"Text Info 20:",True,1335,255,0,105,8595,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.txtInfo1.Create(TextBox,"",True,2640,300,0,1455,945,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo1.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo1.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo2.Create(TextBox,"",True,2640,300,0,1455,1335,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo2.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo2.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo3.Create(TextBox,"",True,2640,300,0,1455,1740,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo3.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo3.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo4.Create(TextBox,"",True,2640,300,0,1455,2145,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo4.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo4.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo5.Create(TextBox,"",True,2640,300,0,1455,2535,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo5.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo5.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo6.Create(TextBox,"",True,2640,300,0,1455,2940,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo6.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo6.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo7.Create(TextBox,"",True,2640,300,0,1455,3345,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo7.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo7.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo8.Create(TextBox,"",True,2640,300,0,1455,3735,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo8.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo8.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo9.Create(TextBox,"",True,2640,300,0,1455,4140,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo9.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo9.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo10.Create(TextBox,"",True,2640,300,0,1455,4545,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo10.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo10.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo11.Create(TextBox,"",True,2640,300,0,1455,4935,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo11.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo11.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo12.Create(TextBox,"",True,2640,300,0,1455,5340,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo12.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo12.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo13.Create(TextBox,"",True,2640,300,0,1455,5745,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo13.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo13.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo14.Create(TextBox,"",True,2640,300,0,1455,6135,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo14.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo14.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo15.Create(TextBox,"",True,2640,300,0,1455,6540,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo15.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo15.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo16.Create(TextBox,"",True,2640,300,0,1455,6945,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo16.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo16.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo17.Create(TextBox,"",True,2640,300,0,1455,7335,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo17.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo17.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo18.Create(TextBox,"",True,2640,300,0,1455,7740,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo18.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo18.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo19.Create(TextBox,"",True,2640,300,0,1455,8145,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo19.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo19.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo20.Create(TextBox,"",True,2640,300,0,1455,8535,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo20.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo20.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.lblTxtInfo21.Create(Label,"Text Info 21:",True,1335,255,0,5100,1005,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo22.Create(Label,"Text Info 22:",True,1335,255,0,5100,1395,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo23.Create(Label,"Text Info 23:",True,1335,255,0,5100,1800,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo24.Create(Label,"Text Info 24:",True,1335,255,0,5100,2205,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo25.Create(Label,"Text Info 25:",True,1335,255,0,5100,2595,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo26.Create(Label,"Text Info 26:",True,1335,255,0,5100,3000,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo27.Create(Label,"Text Info 27:",True,1335,255,0,5100,3405,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo28.Create(Label,"Text Info 28:",True,1335,255,0,5100,3795,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo29.Create(Label,"Text Info 29:",True,1335,255,0,5100,4200,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo30.Create(Label,"Text Info 30:",True,1335,255,0,5100,4605,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo31.Create(Label,"Text Info 31:",True,1335,255,0,5100,4995,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo32.Create(Label,"Text Info 32:",True,1335,255,0,5100,5400,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo33.Create(Label,"Text Info 33:",True,1335,255,0,5100,5805,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo34.Create(Label,"Text Info 34:",True,1335,255,0,5100,6195,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo35.Create(Label,"Text Info 35:",True,1335,255,0,5100,6600,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo36.Create(Label,"Text Info 36:",True,1335,255,0,5100,7005,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo37.Create(Label,"Text Info 37:",True,1335,255,0,5100,7395,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo38.Create(Label,"Text Info 38:",True,1335,255,0,5100,7800,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo39.Create(Label,"Text Info 39:",True,1335,255,0,5100,8205,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo40.Create(Label,"Text Info 40:",True,1335,255,0,5100,8610,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo41.Create(Label,"Text Info 41:",True,1335,255,0,9990,1005,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo42.Create(Label,"Text Info 42:",True,1335,255,0,9990,1395,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo43.Create(Label,"Text Info 43:",True,1335,255,0,9990,1800,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.txtInfo21.Create(TextBox,"",True,2640,300,0,6450,945,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo21.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo21.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo22.Create(TextBox,"",True,2640,300,0,6450,1335,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo22.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo22.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo23.Create(TextBox,"",True,2640,300,0,6450,1740,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo23.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo23.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo24.Create(TextBox,"",True,2640,300,0,6450,2145,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo24.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo24.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo25.Create(TextBox,"",True,2640,300,0,6450,2535,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo25.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo25.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo26.Create(TextBox,"",True,2640,300,0,6450,2940,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo26.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo26.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo27.Create(TextBox,"",True,2640,300,0,6450,3345,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo27.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo27.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo28.Create(TextBox,"",True,2640,300,0,6450,3735,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo28.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo28.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo29.Create(TextBox,"",True,2640,300,0,6450,4140,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo29.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo29.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo30.Create(TextBox,"",True,2640,300,0,6450,4545,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo30.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo30.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo31.Create(TextBox,"",True,2640,300,0,6450,4935,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo31.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo31.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo32.Create(TextBox,"",True,2640,300,0,6450,5340,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo32.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo32.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo33.Create(TextBox,"",True,2640,300,0,6450,5745,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo33.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo33.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo34.Create(TextBox,"",True,2640,300,0,6450,6135,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo34.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo34.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo35.Create(TextBox,"",True,2640,300,0,6450,6540,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo35.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo35.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo36.Create(TextBox,"",True,2640,300,0,6450,6945,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo36.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo36.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo37.Create(TextBox,"",True,2640,300,0,6450,7335,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo37.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo37.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo38.Create(TextBox,"",True,2640,300,0,6450,7740,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo38.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo38.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo39.Create(TextBox,"",True,2640,300,0,6450,8145,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo39.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo39.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo40.Create(TextBox,"",True,2640,300,0,6450,8535,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo40.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo40.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.lblTxtInfo44.Create(Label,"Text Info 44:",True,1335,255,0,9990,2220,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo45.Create(Label,"Text Info 45:",True,1335,255,0,9990,2595,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo46.Create(Label,"Text Info 46:",True,1335,255,0,9990,3000,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo47.Create(Label,"Text Info 47:",True,1335,255,0,9990,3405,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo48.Create(Label,"Text Info 48:",True,1335,255,0,9990,3795,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo49.Create(Label,"Text Info 49:",True,1335,255,0,9990,4200,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo50.Create(Label,"Text Info 50:",True,1335,255,0,9990,4605,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo51.Create(Label,"Text Info 51:",True,1335,255,0,9990,4995,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo52.Create(Label,"Text Info 52:",True,1335,255,0,9990,5400,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo53.Create(Label,"Text Info 53:",True,1335,255,0,9990,5805,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo54.Create(Label,"Text Info 54:",True,1335,255,0,9990,6195,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo55.Create(Label,"Text Info 55:",True,1335,255,0,9990,6600,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo56.Create(Label,"Text Info 56:",True,1335,255,0,9990,7005,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo57.Create(Label,"Text Info 57:",True,1335,255,0,9990,7395,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo58.Create(Label,"Text Info 58:",True,1335,255,0,9990,7800,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo59.Create(Label,"Text Info 59:",True,1335,255,0,9990,8205,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.lblTxtInfo60.Create(Label,"Text Info 60:",True,1335,255,0,9990,8610,True,0,"Arial",8,-2147483633,0)
+Gui.NamePlateTypeFieldMap.txtInfo41.Create(TextBox,"",True,2640,300,0,11355,945,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo41.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo41.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo42.Create(TextBox,"",True,2640,300,0,11355,1335,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo42.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo42.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo43.Create(TextBox,"",True,2640,300,0,11355,1740,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo43.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo43.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo44.Create(TextBox,"",True,2640,300,0,11355,2145,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo44.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo44.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo45.Create(TextBox,"",True,2640,300,0,11355,2535,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo45.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo45.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo46.Create(TextBox,"",True,2640,300,0,11355,2940,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo46.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo46.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo47.Create(TextBox,"",True,2640,300,0,11355,3345,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo47.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo47.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo48.Create(TextBox,"",True,2640,300,0,11355,3735,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo48.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo48.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo49.Create(TextBox,"",True,2640,300,0,11355,4140,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo49.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo49.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo50.Create(TextBox,"",True,2640,300,0,11355,4545,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo50.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo50.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo51.Create(TextBox,"",True,2640,300,0,11355,4935,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo51.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo51.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo52.Create(TextBox,"",True,2640,300,0,11355,5340,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo52.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo52.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo53.Create(TextBox,"",True,2640,300,0,11355,5745,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo53.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo53.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo54.Create(TextBox,"",True,2640,300,0,11355,6135,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo54.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo54.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo55.Create(TextBox,"",True,2640,300,0,11355,6540,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo55.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo55.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo56.Create(TextBox,"",True,2640,300,0,11355,6945,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo56.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo56.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo57.Create(TextBox,"",True,2640,300,0,11355,7335,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo57.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo57.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo58.Create(TextBox,"",True,2640,300,0,11355,7740,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo58.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo58.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo59.Create(TextBox,"",True,2640,300,0,11355,8145,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo59.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo59.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.txtInfo60.Create(TextBox,"",True,2640,300,0,11355,8535,True,0,"Arial",8,-2147483643,1)
+Gui.NamePlateTypeFieldMap.txtInfo60.MaxLength(20)
+Gui.NamePlateTypeFieldMap.txtInfo60.Event(GotFocus,Text_Info_GotFocus)
+Gui.NamePlateTypeFieldMap.cmdDelete.Create(Button)
+Gui.NamePlateTypeFieldMap.cmdDelete.Size(855,375)
+Gui.NamePlateTypeFieldMap.cmdDelete.Position(1035,8955)
+Gui.NamePlateTypeFieldMap.cmdDelete.Caption("Delete")
+Gui.NamePlateTypeFieldMap.cmdDelete.Event(Click,cmdDelete_Click)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	
+	'this can be run from custom menu item or 
+	'script 1 from the so line screen Hook 12410
+	Gui.NamePlateTypeFieldMap..Show
+	
+	F.Intrinsic.Control.ExitSub
+	
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NPType_Fields.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(NamePlateTypeFieldMap_UnLoad)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.cmdType_Click.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	V.Local.sSql.Declare(String,"")
+	V.Local.sTitles.Declare(String,"")
+	V.Local.sWidths.Declare(String,"")
+	V.Local.sRet.Declare(String,"")
+	
+	F.Intrinsic.UI.SetBrowserHotTypeAhead(True)
+	
+	F.ODBC.Connection!Con.OpenCompanyConnection
+	V.Local.sSql.Set("Select rtrim(Type) From GCG_5546_NP_Fields Order by Type")
+	
+	V.Local.sTitles.Set("Type")
+	V.Local.sWidths.Set("1800")
+
+	F.Intrinsic.String.Split(V.Local.sTitles,"*!*",V.Local.sTitles)
+	F.Intrinsic.String.Split(V.Local.sWidths,"*!*",V.Local.sWidths)
+	
+	F.Intrinsic.UI.Browser("Select NamePlate Type","con",V.Local.sSql,V.Local.sTitles,V.Local.sWidths,10200,8700,V.Local.sRet)
+	
+	F.ODBC.Connection!Con.Close
+	
+	F.Intrinsic.Control.If(V.Local.sRet,<>,"***CANCEL***")
+		Gui.NamePlateTypeFieldMap.txtType.Text(V.Local.sRet)
+		F.Intrinsic.Control.CallSub(txtType_LostFocus)
+	F.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.Control.ExitSub
+	
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NPType_Fields.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(NamePlateTypeFieldMap_UnLoad)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdType_Click.End
+
+Program.Sub.cmdSave_Click.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	V.Local.i.Declare(Long,0)
+	V.Local.sText.Declare(String,"")
+	V.Local.sInfo.Declare(String,"")
+	
+	F.Intrinsic.UI.InvokeWaitDialog("Saving NamePlate Type.......")
+	F.Intrinsic.Control.For(V.Local.i,1,60,1)
+		F.Intrinsic.String.Build("txtInfo{0}",V.Local.i,V.Local.sText)
+		F.Intrinsic.String.Build("text_info_{0}",V.Local.i,V.Local.sInfo)
+		F.Intrinsic.Control.If(V.DataTable.Type.RowCount--,=,-1)
+			F.Data.DataTable.AddRow("Type","Type",V.Screen.NamePlateTypeFieldMap!txtType.Text,V.Local.sInfo,V.Screen.NamePlateTypeFieldMap![V.Local.sText].Text)
+		F.Intrinsic.Control.Else
+			F.Data.DataTable.SetValue("Type",V.DataTable.Type.RowCount--,V.Local.sInfo,V.Screen.NamePlateTypeFieldMap![V.Local.sText].Text)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.Next(V.Local.i)
+	
+	F.ODBC.Connection!Con.OpenCompanyConnection
+	F.Data.DataTable.SaveToDB("Type","con","GCG_5546_NP_Fields","Type")
+	F.ODBC.Connection!Con.Close
+	
+	F.Intrinsic.UI.CloseWaitDialog
+	F.Intrinsic.Control.ExitSub
+	
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NPType_Fields.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(NamePlateTypeFieldMap_UnLoad)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdSave_Click.End
+
+Program.Sub.NamePlateTypeFieldMap_UnLoad.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	
+	F.Intrinsic.Control.End
+	
+	F.Intrinsic.Control.ExitSub
+	
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NPType_Fields.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.End
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndTry
+Program.Sub.NamePlateTypeFieldMap_UnLoad.End
+
+Program.Sub.txtType_GotFocus.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	
+	Gui.NamePlateTypeFieldMap.txtType.SelectAll
+	
+	F.Intrinsic.Control.ExitSub
+	
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NPType_Fields.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(NamePlateTypeFieldMap_UnLoad)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndTry
+Program.Sub.txtType_GotFocus.End
+
+Program.Sub.txtType_LostFocus.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	V.Local.sType.Declare(String,"")
+	V.Local.sSql.Declare(String,"")
+	V.Local.i.Declare(Long,0)
+	V.Local.sText.Declare(String,"")
+	V.Local.sInfo.Declare(String,"")
+	
+	V.Local.sType.Set(V.Screen.NamePlateTypeFieldMap!txtType.Text)
+	v.Local.sType.Set(v.Local.sType.UCase)
+	F.Intrinsic.Control.BlockEvents
+	Gui.NamePlateTypeFieldMap.txtType.Text(V.Local.sType)
+	F.Intrinsic.Control.UnBlockEvents
+	F.Intrinsic.String.Build("Select * From GCG_5546_NP_Fields where Type = '{0}'",V.Local.sType.Trim,V.Local.sSql)
+	
+	F.ODBC.Connection!Con.OpenCompanyConnection
+	F.Intrinsic.Control.If(V.DataTable.Type.Exists)
+		F.Data.DataTable.Close("Type")
+	f.Intrinsic.Control.EndIf
+	
+	F.Data.DataTable.CreateFromSQL("Type","con",V.Local.sSql,True)
+	
+	f.Intrinsic.Control.If(v.DataTable.Type.RowCount--,<>,-1)
+		F.Intrinsic.Control.For(V.Local.i,1,60,1)
+			F.Intrinsic.String.Build("txtInfo{0}",V.Local.i,V.Local.sText)
+			F.Intrinsic.String.Build("text_info_{0}",V.Local.i,V.Local.sInfo)
+			Gui.NamePlateTypeFieldMap.[V.Local.sText].Text(V.DataTable.Type(V.DataTable.Type.RowCount--).[V.Local.sInfo]!FieldValTrim)
+		F.Intrinsic.Control.Next(V.Local.i)
+	f.Intrinsic.Control.Else
+		F.Intrinsic.Control.For(V.Local.i,1,60,1)
+			F.Intrinsic.String.Build("txtInfo{0}",V.Local.i,V.Local.sText)
+			Gui.NamePlateTypeFieldMap.[V.Local.sText].Text("")
+		F.Intrinsic.Control.Next(V.Local.i)
+	f.Intrinsic.Control.EndIf
+	
+	F.ODBC.Connection!Con.Close
+	
+	F.Intrinsic.Control.ExitSub
+	
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NPType_Fields.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(NamePlateTypeFieldMap_UnLoad)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndTry
+Program.Sub.txtType_LostFocus.End
+
+Program.Sub.Text_Info_GotFocus.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+
+	Gui.NamePlateTypeFieldMap.[V.Args.ControlName.Trim].SelectAll
+	
+	F.Intrinsic.Control.ExitSub
+	
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NPType_Fields.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(NamePlateTypeFieldMap_UnLoad)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndTry
+Program.Sub.Text_Info_GotFocus.End
+
+Program.Sub.cmdDelete_Click.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	V.Local.iRet.Declare(Long,0)
+	V.Local.sSql.Declare(String,"")
+	V.Local.sType.Declare(String,"")
+	V.Local.i.Declare(Long,0)
+	V.Local.sInfo.Declare(String,"")
+	
+	V.Local.sType.Set(V.Screen.NamePlateTypeFieldMap!txtType.Text)
+	
+	F.Intrinsic.UI.Msgbox("Are you sure you want to delete Name Plate Type?","Attention",4,V.Local.iRet)
+	
+	F.Intrinsic.Control.If(V.Local.iRet,=,6)
+		F.Intrinsic.String.Build("Delete From GCG_5546_NP_Fields where Type = '{0}'",V.Local.sType.Trim,V.Local.sSql)
+		F.ODBC.Connection!Con.OpenCompanyConnection
+		F.ODBC.Connection!Con.Execute(V.Local.sSql)
+		F.ODBC.Connection!Con.Close
+	F.Intrinsic.Control.EndIf
+	
+	Gui.NamePlateTypeFieldMap.txtType.Text("")
+	
+	F.Intrinsic.Control.For(V.Local.i,1,60,1)
+		F.Intrinsic.String.Build("txtinfo{0}",V.Local.i,V.Local.sInfo)
+		Gui.NamePlateTypeFieldMap.txtInfo1.Text("")
+	F.Intrinsic.Control.Next(V.Local.i)
+	
+	F.Intrinsic.Control.ExitSub
+	
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NPType_Fields.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(NamePlateTypeFieldMap_UnLoad)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdDelete_Click.End
