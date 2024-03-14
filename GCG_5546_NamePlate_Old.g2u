@@ -1,0 +1,375 @@
+Program.Sub.ScreenSU.Start
+Gui.FormNamePlateOld..Create
+Gui.FormNamePlateOld..Caption("NamePlate Old Data Lookup")
+Gui.FormNamePlateOld..Size(15360,10695)
+Gui.FormNamePlateOld..MinX(0)
+Gui.FormNamePlateOld..MinY(0)
+Gui.FormNamePlateOld..Position(0,0)
+Gui.FormNamePlateOld..BackColor(-2147483633)
+Gui.FormNamePlateOld..MousePointer(0)
+Gui.FormNamePlateOld..Event(UnLoad,FormNamePlateOld_UnLoad)
+Gui.FormNamePlateOld.GsGridControl1.Create(GsGridControl)
+Gui.FormNamePlateOld.GsGridControl1.Size(15015,10170)
+Gui.FormNamePlateOld.GsGridControl1.Position(105,105)
+Gui.FormNamePlateOld.GsGridControl1.Event(RowCellClick,GsGridControl1_RowCellClick)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+
+	F.Intrinsic.Control.If(V.Caller.Switches,=,"L")
+		F.Intrinsic.Control.CallSub(Load_File)
+		F.Intrinsic.Control.CallSub(FormNamePlateOld_UnLoad)
+	F.Intrinsic.Control.Else
+		F.Intrinsic.Control.CallSub(Get_Data)
+		F.Intrinsic.Control.CallSub(Set_Properties)
+	
+		Gui.FormNamePlateOld..Show
+	F.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NamePlate_Old.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(FormNamePlateOld_UnLoad)
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.FormNamePlateOld_UnLoad.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+
+	F.Intrinsic.Control.If(V.DataTable.NamePlate.Exists)
+		F.Data.DataTable.Close("NamePlate")
+	F.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.Control.If(V.DataTable.HistName.Exists)
+		F.Data.DataTable.Close("HistName")
+	F.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.Control.End
+	
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NamePlate_Old.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.End
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.FormNamePlateOld_UnLoad.End
+
+Program.Sub.Get_Data.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	
+	F.ODBC.Connection!Con.OpenCompanyConnection
+	
+	F.Data.DataTable.CreateFromSQL("NamePlate","con","Select * From GCG_5546_NP_Hist Order by Hist_No",True)
+	
+	F.ODBC.Connection!Con.Close
+	
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NamePlate_Old.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(FormNamePlateOld_UnLoad)
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.Get_Data.End
+
+Program.Sub.Set_Properties.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	V.Local.sRet.Declare(String,"")
+	
+	Gui.FormNamePlateOld.GsGridControl1.Anchor(15)
+	
+	Gui.FormNamePlateOld.GsGridControl1.AddGridviewFromDatatable("GNamePlate","NamePlate")
+	Gui.FormNamePlateOld.GsGridControl1.SetGridviewProperty("GNamePlate","ReadOnly",True)
+	Gui.FormNamePlateOld.GsGridControl1.SetGridviewProperty("GNamePlate","Editable",False)
+	Gui.FormNamePlateOld.GsGridControl1.SetGridviewProperty("GNamePlate","OptionsViewShowAutoFilterRow",True)
+	Gui.FormNamePlateOld.GsGridControl1.SetGridviewProperty("GNamePlate","OptionsViewColumnAutoWidth",False)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Hist_No","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Hist_No","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Hist_No","Caption","Hist No")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Hist_No","Visible",False)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Job_Number","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Job_Number","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Job_Number","Caption","Job Number")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Job_Number","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info01","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info01","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info01","Caption","HP/KW:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info01","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info02","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info02","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info02","Caption","RPM:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info02","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info03","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info03","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info03","Caption","ARM VOLTS:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info03","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info04","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info04","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info04","Caption","FRAME:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info04","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info05","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info05","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info05","Caption","ENCLOSURE:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info05","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info06","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info06","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info06","Caption","MAKE:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info06","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info07","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info07","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info07","Caption","ID/SER#:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info07","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info08","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info08","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info08","Caption","TAG#:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info08","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info09","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info09","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info09","Caption","PICKUP#:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info09","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info10","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info10","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info10","Caption","WO:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info10","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info11","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info11","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info11","Caption","CHARGE#:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info11","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info12","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info12","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info12","Caption","ACCT#:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info12","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info13","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info13","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info13","Caption","MODEL:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info13","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info14","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info14","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info14","Caption","ARM AMPS:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info14","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info15","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info15","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info15","Caption","FIELD AMP:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info15","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info16","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info16","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info16","Caption","FIELD VLT:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info16","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info17","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info17","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info17","Caption","TYPE WNDG:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info17","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info18","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info18","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info18","Caption","GMN#:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info18","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info19","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info19","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info19","Caption","DATA INFO 19")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info19","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info20","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info20","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info20","Caption","DATA INFO 20")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info20","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info21","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info21","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info21","Caption","PART#:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info21","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info22","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info22","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info22","Caption","EQUIP#:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info22","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info23","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info23","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info23","Caption","PICKUP DATE:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info23","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info24","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info24","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info24","Caption","FAILED")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info24","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info25","HeaderBackColor","Green")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info25","HeaderForeColor","White")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info25","Caption","SERIAL#:")
+	Gui.FormNamePlateOld.GsGridControl1.SetColumnProperty("GNamePlate","Data_Info25","Width",200)
+	
+	Gui.FormNamePlateOld.GsGridControl1.MainView("GNamePlate")
+	
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NamePlate_Old.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(FormNamePlateOld_UnLoad)
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.Set_Properties.End
+
+Program.Sub.GsGridControl1_RowCellClick.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NamePlate_Old.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(FormNamePlateOld_UnLoad)
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.GsGridControl1_RowCellClick.End
+
+Program.Sub.Load_File.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	V.Local.sFile.Declare(String,"")
+	V.Local.sFileList.Declare(String,"")
+	V.Local.i.Declare(Long,0)
+	v.local.iRet.Declare(Long,0)
+	V.Local.iCount.Declare(Long,0)
+	V.Local.iTemp.Declare(Long,0)
+	V.Local.iRowCount.Declare(Long,0)
+	V.Local.iRow.Declare(Long,0)
+	V.Local.sRow.Declare(String,"")
+	V.Local.sFieldNames.Declare(String,"")
+	V.Local.sFieldType.Declare(String,"")
+	V.Local.sField.Declare(String,"")
+	V.Local.iProg.Declare(Long,0)
+	V.Local.bRet.Declare(Boolean,False)
+	
+	F.Intrinsic.UI.InvokeWaitDialog("Parsing File................")
+	F.Intrinsic.UI.ChangeWaitStatus("Parsing File................",0,0,1)
+	
+	V.Local.sFieldNames.Set("Hist_No*!*Job_Number*!*Data_Info01*!*Data_Info02*!*Data_Info03*!*Data_Info04*!*Data_Info05*!*Data_Info06*!*Data_Info07*!*Data_Info08*!*Data_Info09*!*Data_Info10*!*Data_Info11*!*Data_Info12*!*Data_Info13*!*Data_Info14*!*Data_Info15*!*Data_Info16*!*Data_Info17*!*Data_Info18*!*Data_Info19*!*Data_Info20*!*Data_Info21*!*Data_Info22*!*Data_Info23*!*Data_Info24*!*Data_Info25")
+	V.Local.sFieldType.Set("Long*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String")
+	'Build Datatable
+	F.Data.DataTable.CreateFromString("HistName","1*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String*!*String",V.Local.sFieldNames,V.Local.sFieldType,"*!*",V.Ambient.NewLine,True)
+	F.Data.DataTable.DeleteRow("HistName")
+	F.Data.DataTable.AcceptChanges("HistName")
+	
+	F.Intrinsic.Control.If(V.Caller.GlobalDir.Right1,<>,"\")
+		F.Intrinsic.String.Build("{0}\",V.Caller.GlobalDir,V.Local.sFile)
+	F.Intrinsic.Control.Else
+		V.Local.sFile.Set(V.Caller.GlobalDir)
+	F.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.String.Build("{0}CUSTOM\5546\HISTORY\",V.Local.sFile,V.Local.sFile)
+	
+	F.Intrinsic.File.DirExists(V.Local.sFile,V.Local.bRet)
+	F.Intrinsic.Control.If(V.Local.bRet,=,False)
+		F.Intrinsic.File.CreateDir(V.Local.sFile)
+	F.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.File.GetFileList(V.Local.sFile,V.Local.sFileList)
+	
+	F.Intrinsic.Control.If(V.Local.sFileList.Trim,=,"")
+		F.Intrinsic.UI.Msgbox("Place Excel File In Global\Custom\5546\History Folder......")
+		F.Intrinsic.Control.CallSub(FormNamePlateOld_UnLoad)
+	F.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.String.Split(v.Local.sFileList,":",v.Local.sFileList)
+	
+	F.Intrinsic.String.Build("{0}\{1}",V.Local.sFile,V.Local.sFileList,V.Local.sFileList)
+	
+	F.Automation.MSExcel.CreateAppObject("MSExcel")
+	
+	F.Automation.MSExcel.OpenWorkbook("MSExcel","NamePlate",V.Local.sFileList)
+	
+	F.Automation.MSExcel.GetWorkSheetCount("NamePlate",v.local.iRet)
+	
+	F.Intrinsic.Math.Add(V.Local.iRet,1,V.Local.iProg)
+	F.Intrinsic.Control.For(V.Local.i,1,V.Local.iRet,1)
+		F.Intrinsic.UI.ChangeWaitStatus("Parsing File................",V.Local.i,0,V.Local.iProg)
+		F.Automation.MSExcel.OpenWorkSheet("NamePlate","NameSheet",V.Local.i)
+		F.Automation.MSExcel.RowCount("NameSheet",V.Local.iRowCount)
+		F.Intrinsic.Control.For(V.Local.iRow,1,V.Local.iRowCount,1)
+			F.Intrinsic.Math.Add(V.Local.iRow,1,V.Local.iTemp)
+			F.Automation.MSExcel.ReadRow("NameSheet",V.Local.iTemp,1,3,V.Local.sRow)
+			F.Intrinsic.String.Split(V.Local.sRow,"*!*",V.Local.sRow)
+			F.Intrinsic.Control.If(V.Local.sRow(0).Trim,<>,"")
+				F.Intrinsic.Control.If(V.Local.sRow(1).Trim,=,"01")
+					F.Data.DataTable.AddRow("HistName","Job_Number",V.Local.sRow(0).Right6,"Data_Info01",V.Local.sRow(2).Trim)
+				F.Intrinsic.Control.Else
+					F.Intrinsic.String.Build("Data_Info{0}",V.Local.sRow(1).Trim,V.Local.sField)
+					F.Data.DataTable.SetValue("HistName",V.DataTable.HistName.RowCount--,V.Local.sField,V.Local.sRow(2).Trim)
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.Else
+				F.Intrinsic.Control.ExitFor(V.Local.iRow)
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.Next(V.Local.iRow)
+		F.Automation.Generic.DestroyObject("NameSheet")
+	F.Intrinsic.Control.Next(V.Local.i)
+	
+	F.Automation.Generic.DestroyObject("NamePlate")
+	F.Automation.Generic.DestroyObject("MSExcel")
+	
+	F.Intrinsic.Control.For(V.Local.i,0,V.DataTable.HistName.RowCount--,1)
+		F.Intrinsic.Math.Add(V.Local.i,1,V.Local.iTemp)
+		F.Data.DataTable.SetValue("HistName",V.Local.i,"Hist_No",V.Local.iTemp)
+	F.Intrinsic.Control.Next(V.Local.i)
+	
+	F.Intrinsic.UI.ChangeWaitStatus("Saving Data................",V.Local.iProg,0,V.Local.iProg)
+	
+	F.ODBC.Connection!Con.OpenCompanyConnection
+	F.ODBC.Connection!Con.Execute("Delete From GCG_5546_NP_Hist")
+
+	V.Local.sFieldNames.Set("Hist_No@!@Hist_No*!*Job_Number@!@Job_Number*!*Data_Info01@!@Data_Info01*!*Data_Info02@!@Data_Info02*!*Data_Info03@!@Data_Info03*!*Data_Info04@!@Data_Info04*!*Data_Info05@!@Data_Info05*!*Data_Info06@!@Data_Info06*!*Data_Info07@!@Data_Info07*!*Data_Info08@!@Data_Info08*!*Data_Info09@!@Data_Info09*!*Data_Info10@!@Data_Info10*!*Data_Info11@!@Data_Info11*!*Data_Info12@!@Data_Info12*!*Data_Info13@!@Data_Info13*!*Data_Info14@!@Data_Info14*!*Data_Info15@!@Data_Info15*!*Data_Info16@!@Data_Info16*!*Data_Info17@!@Data_Info17*!*Data_Info18@!@Data_Info18*!*Data_Info19@!@Data_Info19*!*Data_Info20@!@Data_Info20*!*Data_Info21@!@Data_Info21*!*Data_Info22@!@Data_Info22*!*Data_Info23@!@Data_Info23*!*Data_Info24@!@Data_Info24*!*Data_Info25@!@Data_Info25")
+	F.Data.DataTable.SaveToDB("HistName","con","GCG_5546_NP_Hist","",128,V.Local.sFieldNames)
+	
+	F.ODBC.Connection!Con.Close
+	
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NamePlate_Old.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(FormNamePlateOld_UnLoad)
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.Load_File.End
