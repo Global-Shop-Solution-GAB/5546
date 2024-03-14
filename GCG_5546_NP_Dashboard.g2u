@@ -1,0 +1,454 @@
+Program.Sub.ScreenSU.Start
+Gui.FormNamePlate..Create
+Gui.FormNamePlate..Caption("NamePlate Lookup")
+Gui.FormNamePlate..Size(15360,10770)
+Gui.FormNamePlate..MinX(0)
+Gui.FormNamePlate..MinY(0)
+Gui.FormNamePlate..Position(0,0)
+Gui.FormNamePlate..BackColor(-2147483633)
+Gui.FormNamePlate..MousePointer(0)
+Gui.FormNamePlate..Event(UnLoad,FormNamePlate_UnLoad)
+Gui.FormNamePlate.GsGridControl1.Create(GsGridControl)
+Gui.FormNamePlate.GsGridControl1.Size(15015,4875)
+Gui.FormNamePlate.GsGridControl1.Position(105,105)
+Gui.FormNamePlate.GsGridControl1.Event(RowCellClick,GsGridControl1_RowCellClick)
+Gui.FormNamePlate.GsGridControl2.Create(GsGridControl)
+Gui.FormNamePlate.GsGridControl2.Size(15015,4875)
+Gui.FormNamePlate.GsGridControl2.Position(105,5460)
+Gui.FormNamePlate.GsGridControl2.Event(RowCellClick,GsGridControl2_RowCellClick)
+Gui.FormNamePlate.lblType.Create(Label,"Select Type:",True,1020,255,0,105,5220,True,0,"Arial",8,-2147483633,0)
+Gui.FormNamePlate.ddlType.Create(DropDownList)
+Gui.FormNamePlate.ddlType.Size(2400,330)
+Gui.FormNamePlate.ddlType.Position(1110,5085)
+Gui.FormNamePlate.ddlType.Event(Click,ddlType_Click)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+
+	F.Intrinsic.Control.CallSub(Get_Data)
+	F.Intrinsic.Control.CallSub(Set_Properties)
+	
+	Gui.FormNamePlate..Show
+
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NP_Dashboard",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(FormNamePlate_UnLoad)
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.FormNamePlate_UnLoad.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+
+	F.Intrinsic.Control.End
+	
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NP_Dashboard",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.End
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.FormNamePlate_UnLoad.End
+
+Program.Sub.Get_Data.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	V.Local.sSql.Declare(String,"")
+
+	F.ODBC.Connection!Con.OpenCompanyConnection
+	
+	F.Data.DataTable.Create("NamePlate",True)
+	F.Data.DataTable.AddColumn("NamePlate","Customer","String")
+	F.Data.DataTable.AddColumn("NamePlate","Name","String")
+	F.Data.DataTable.AddColumn("NamePlate","Order_Type","String")
+	F.Data.DataTable.AddColumn("NamePlate","SO_WO","String")
+	F.Data.DataTable.AddColumn("NamePlate","Name_Plate","String")
+	F.Data.DataTable.AddColumn("NamePlate","Record_Type","String")
+	F.Data.DataTable.AddColumn("NamePlate","Date_Closed","String")
+	F.Intrinsic.Control.If(V.Caller.Hook,=,12431)
+		F.Data.DataTable.AddColumn("NamePlate","Selection","String")
+	F.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.String.Build("Select If(rtrim(suffix) <> '',rtrim(Job)+'-'+rtrim(Suffix),rtrim(Job)) as SO_WO, 'WO' as Order_Type, rtrim(User_3)+rtrim(user_4) as Name_Plate, '' as Record_Type, '' as Customer, '' as Date_Closed From V_WO_USER_FLDS where rtrim(user_3) <> ''",V.Ambient.Date,V.Local.sSql)
+	
+	F.Data.DataTable.CreateFromSQL("Temp","con",V.Local.sSql)
+	F.Intrinsic.Control.If(V.DataTable.Temp.RowCount--,<>,-1)
+		F.Intrinsic.String.Build("Select If(rtrim(suffix) <> '',rtrim(Job)+'-'+rtrim(Suffix),rtrim(Job)) as SO_WO, 'A' as Record_Type From V_Job_Header Union Select If(rtrim(suffix) <> '',rtrim(Job)+'-'+rtrim(Suffix),rtrim(Job)) as SO_WO, 'H' as Record_Number From V_Job_Hist_Mast","",V.Local.sSql)
+		F.Data.Dictionary.CreateFromSQL("Hist","con",V.Local.sSql)
+		F.Data.Dictionary.SetDefaultReturn("Hist"," ")
+		F.Data.DataTable.FillFromDictionary("Temp","Hist","SO_WO","Record_Type")
+		F.Data.Dictionary.Close("Hist")
+		F.Intrinsic.String.Build("Select If(rtrim(suffix) <> '',rtrim(Job)+'-'+rtrim(Suffix),rtrim(Job)) as SO_WO, Customer From V_Job_Header Union Select If(rtrim(suffix) <> '',rtrim(Job)+'-'+rtrim(Suffix),rtrim(Job)) as SO_WO, Customer From V_Job_Hist_Mast","",V.Local.sSql)
+		F.Data.Dictionary.CreateFromSQL("Customer","con",V.Local.sSql)
+		F.Data.Dictionary.SetDefaultReturn("Customer"," ")
+		F.Data.DataTable.FillFromDictionary("Temp","Customer","SO_WO","Customer")
+		F.Data.Dictionary.Close("Customer")
+		F.Intrinsic.String.Build("Select If(rtrim(suffix) <> '',rtrim(Job)+'-'+rtrim(Suffix),rtrim(Job)) as SO_WO, SUBSTRING(DATE_CLOSED,1,2)+'/'+SUBSTRING(DATE_CLOSED,3,2)+'/'+IF(SUBSTRING(DATE_CLOSED,5,2)< '80','20'+SUBSTRING(DATE_CLOSED,5,2),'19'+SUBSTRING(DATE_CLOSED,5,2)) as Date_Closed From Job_Header Where Date_Closed <> '000000' Union Select If(rtrim(suffix) <> '',rtrim(Job)+'-'+rtrim(Suffix),rtrim(Job)) as SO_WO,  SUBSTRING(DATE_CLOSED,1,2)+'/'+SUBSTRING(DATE_CLOSED,3,2)+'/'+IF(SUBSTRING(DATE_CLOSED,5,2)< '80','20'+SUBSTRING(DATE_CLOSED,5,2),'19'+SUBSTRING(DATE_CLOSED,5,2)) as Date_Closed From Job_Hist_Mast Where Date_Closed <> '000000'","",V.Local.sSql)
+		F.Data.Dictionary.CreateFromSQL("Date","con",V.Local.sSql)
+		F.Data.Dictionary.SetDefaultReturn("Date",V.Ambient.DBNull)	
+		
+		F.Data.DataTable.FillFromDictionary("Temp","Date","SO_WO","Date_Closed")
+		F.Data.Dictionary.Close("Date")
+		
+		F.Data.DataTable.Merge("Temp","NamePlate",False,2)
+	F.Intrinsic.Control.EndIf
+	
+	F.Data.DataTable.Close("Temp")
+	
+	F.Intrinsic.String.Build("Select rtrim(Order_No)+'-'+rtrim(Record_No) as SO_WO, 'SO' as Order_Type, rtrim(User_3)+rtrim(user_4) as Name_Plate, 'A' as Record_Type, Customer, IF(Date_Ship <> '',SUBSTRING(DATE_SHIP,1,2)+'/'+SUBSTRING(DATE_SHIP,3,2)+'/'+IF(SUBSTRING(DATE_SHIP,5,2)< '80','20'+SUBSTRING(DATE_SHIP,5,2),'19'+SUBSTRING(DATE_SHIP,5,2)),DATE_SHIP) as Date_Closed From Order_Lines where rtrim(user_3) <> '' and Date_Ship <> '000000' and Record_No > '0000'","",V.Local.sSql)
+	
+	F.Data.DataTable.CreateFromSQL("Temp","con",V.Local.sSql)
+	F.Intrinsic.Control.If(V.DataTable.Temp.RowCount--,<>,-1)
+		F.Data.DataTable.Merge("Temp","NamePlate",False,2)
+	F.Intrinsic.Control.EndIf
+	
+	F.Data.DataTable.Close("Temp")
+	
+	F.Intrinsic.String.Build("Select rtrim(Order_No)+'-'+rtrim(Order_Line) as SO_WO, 'SO' as Order_Type, rtrim(User_3)+rtrim(user_4) as Name_Plate, 'H' as Record_Type, Customer, DATE_SHIPPED as Date_Closed From ORDER_HIST_LINE where rtrim(user_3) <> ''","",V.Local.sSql)
+	
+	F.Data.DataTable.CreateFromSQL("Temp","con",V.Local.sSql)
+	F.Intrinsic.Control.If(V.DataTable.Temp.RowCount--,<>,-1)
+		F.Data.DataTable.Merge("Temp","NamePlate",False,2)
+	F.Intrinsic.Control.EndIf
+	
+	F.Data.DataTable.Close("Temp")
+	
+	F.Intrinsic.String.Build("Select Customer, Name_Customer as Name From V_Customer_Master","",V.Local.sSql)
+	F.Data.Dictionary.CreateFromSQL("Name","con",V.Local.sSql)
+	F.Data.Dictionary.SetDefaultReturn("Name"," ")
+	F.Data.DataTable.FillFromDictionary("NamePlate","Name","Customer","Name")
+	F.Data.Dictionary.Close("Name")
+	
+	V.Local.sSql.Set("Select rtrim(NamePlate) as NamePlate, rtrim(Type) as Type, rtrim(Text_Info_1) as Text_Info_1, rtrim(Text_Info_2) as Text_Info_2, rtrim(Text_Info_3) as Text_Info_3, rtrim(Text_Info_4) as Text_Info_4, rtrim(Text_Info_5) as Text_Info_5, rtrim(Text_Info_6) as Text_Info_6, rtrim(Text_Info_7) as Text_Info_7, rtrim(Text_Info_8) as Text_Info_8, rtrim(Text_Info_9) as Text_Info_9, rtrim(Text_Info_10) as Text_Info_10, rtrim(Text_Info_11) as Text_Info_11") 
+	F.Intrinsic.String.Build("{0}, rtrim(Text_Info_12) as Text_Info_12, rtrim(Text_Info_13) as Text_Info_13, rtrim(Text_Info_14) as Text_Info_14, rtrim(Text_Info_15) as Text_Info_15, rtrim(Text_Info_16) as Text_Info_16, rtrim(Text_Info_17) as Text_Info_17, rtrim(Text_Info_18) as Text_Info_18, rtrim(Text_Info_19) as Text_Info_19",V.Local.sSql,V.Local.sSql)
+	F.Intrinsic.String.Build("{0}, rtrim(Text_Info_20) as Text_Info_20, rtrim(Text_Info_21) as Text_Info_21, rtrim(Text_Info_22) as Text_Info_22, rtrim(Text_Info_23) as Text_Info_23, rtrim(Text_Info_24) as Text_Info_24, rtrim(Text_Info_25) as Text_Info_25, rtrim(Text_Info_26) as Text_Info_26, rtrim(Text_Info_27) as Text_Info_27, rtrim(Text_Info_28) as Text_Info_28, rtrim(Text_Info_29) as Text_Info_29",V.Local.sSql,V.Local.sSql)
+	F.Intrinsic.String.Build("{0}, rtrim(Text_Info_30) as Text_Info_30, rtrim(Text_Info_31) as Text_Info_31, rtrim(Text_Info_32) as Text_Info_32, rtrim(Text_Info_33) as Text_Info_33, rtrim(Text_Info_34) as Text_Info_34, rtrim(Text_Info_35) as Text_Info_35, rtrim(Text_Info_36) as Text_Info_36, rtrim(Text_Info_37) as Text_Info_37, rtrim(Text_Info_38) as Text_Info_38, rtrim(Text_Info_39) as Text_Info_39",V.Local.sSql,V.Local.sSql)
+	F.Intrinsic.String.Build("{0}, rtrim(Text_Info_40) as Text_Info_40, rtrim(Text_Info_41) as Text_Info_41, rtrim(Text_Info_42) as Text_Info_42, rtrim(Text_Info_43) as Text_Info_43, rtrim(Text_Info_44) as Text_Info_44, rtrim(Text_Info_45) as Text_Info_45, rtrim(Text_Info_46) as Text_Info_46, rtrim(Text_Info_47) as Text_Info_47, rtrim(Text_Info_48) as Text_Info_48, rtrim(Text_Info_49) as Text_Info_49",V.Local.sSql,V.Local.sSql)
+	F.Intrinsic.String.Build("{0}, rtrim(Text_Info_50) as Text_Info_50, rtrim(Text_Info_51) as Text_Info_51, rtrim(Text_Info_52) as Text_Info_52, rtrim(Text_Info_53) as Text_Info_53, rtrim(Text_Info_54) as Text_Info_54, rtrim(Text_Info_55) as Text_Info_55, rtrim(Text_Info_56) as Text_Info_56, rtrim(Text_Info_57) as Text_Info_57, rtrim(Text_Info_58) as Text_Info_58, rtrim(Text_Info_59) as Text_Info_59",V.Local.sSql,V.Local.sSql)
+	F.Intrinsic.String.Build("{0}, rtrim(Text_Info_60) as Text_Info_60 From GCG_5546_Nameplate",V.Local.sSql,V.Local.sSql)
+	F.Data.DataTable.CreateFromSQL("Type","con",V.Local.sSql,True)
+	F.Intrinsic.Control.If(V.Caller.Hook,=,12431)
+		F.Data.DataTable.AddColumn("Type","Selection","String")
+	F.Intrinsic.Control.EndIf
+	F.Data.DataView.Create("Type","VType",22,"Type = '-1111111'","")
+	
+	F.Data.Dictionary.CreateFromSQL("DType","con","Select Distinct rtrim(Type),rtrim(Type) From GCG_5546_NP_Fields")
+	
+	Gui.FormNamePlate.ddlType.AddItem(" ",0)
+	Gui.FormNamePlate.ddlType.addItems("Dictionary","DType")
+	
+	F.ODBC.Connection!Con.Close
+	
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NP_Dashboard",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(FormNamePlate_UnLoad)
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.Get_Data.End
+
+Program.Sub.Set_Properties.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	V.Local.i.Declare(Long,0)
+	V.Local.sField.Declare(String,"")
+
+	Gui.FormNamePlate.GsGridControl1.AddGridviewFromDatatable("GNamePlate","NamePlate")
+	Gui.FormNamePlate.GsGridControl1.SetGridviewProperty("GNamePlate","Multiselect",False)
+	Gui.FormNamePlate.GsGridControl1.SetGridviewProperty("GNamePlate","OptionsSelectionEnableAppearanceFocusedRow",False)
+	Gui.FormNamePlate.GsGridControl1.SetGridviewProperty("GNamePlate","OptionsViewShowAutoFilterRow",True)
+	
+	'If fired From Custom Hook add another column for editor button
+	F.Intrinsic.Control.If(V.Caller.Hook,=,12431)
+		Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Selection","HeaderBackColor","Green")
+		Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Selection","HeaderForeColor","White")
+		Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Selection","ReadOnly",True)
+		Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Selection","AllowEdit",False)
+		Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Selection","Caption"," ")
+		Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Selection","Visible",True)
+		Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Selection","Fixed","right")
+		Gui.FormNamePlate.GsGridControl1.ColumnEdit("GNamePlate","Selection","EditorButton","Select")
+	F.Intrinsic.Control.EndIf
+	
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Customer","HeaderBackColor","Green")
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Customer","HeaderForeColor","White")
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Customer","ReadOnly",True)
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Customer","AllowEdit",False)
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Customer","Caption","Customer")
+	
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Name","HeaderBackColor","Green")
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Name","HeaderForeColor","White")
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Name","ReadOnly",True)
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Name","AllowEdit",False)
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Name","Caption","Name")
+	
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Order_Type","HeaderBackColor","Green")
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Order_Type","HeaderForeColor","White")
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Order_Type","ReadOnly",True)
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Order_Type","AllowEdit",False)
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Order_Type","Caption","Order Type")
+	
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","SO_WO","HeaderBackColor","Green")
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","SO_WO","HeaderForeColor","White")
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","SO_WO","ReadOnly",True)
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","SO_WO","AllowEdit",False)
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","SO_WO","Caption","SO/WO")
+	
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Name_Plate","HeaderBackColor","Green")
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Name_Plate","HeaderForeColor","White")
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Name_Plate","ReadOnly",True)
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Name_Plate","AllowEdit",False)
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Name_Plate","Caption","Name Plate")
+	
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Record_Type","HeaderBackColor","Green")
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Record_Type","HeaderForeColor","White")
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Record_Type","ReadOnly",True)
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Record_Type","AllowEdit",False)
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Record_Type","Caption","Record Type")
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Record_Type","Visible",False)
+	
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Date_Closed","HeaderBackColor","Green")
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Date_Closed","HeaderForeColor","White")
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Date_Closed","ReadOnly",True)
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Date_Closed","AllowEdit",False)
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Date_Closed","Caption","Date")
+	Gui.FormNamePlate.GsGridControl1.SetColumnProperty("GNamePlate","Date_Closed","DisplayCustomDatetime","d")
+
+	Gui.FormNamePlate.GsGridControl1.MainView("GNamePlate")
+	
+	Gui.FormNamePlate.GsGridControl2.AddGridviewFromDataview("GType","Type","VType")
+	Gui.FormNamePlate.GsGridControl2.SetGridviewProperty("GType","Multiselect",False)
+	Gui.FormNamePlate.GsGridControl2.SetGridviewProperty("GType","OptionsSelectionEnableAppearanceFocusedRow",False)
+	Gui.FormNamePlate.GsGridControl2.SetGridviewProperty("GType","OptionsViewShowAutoFilterRow",True)
+	Gui.FormNamePlate.GsGridControl2.SetGridviewProperty("GType","OptionsViewColumnAutoWidth",False)
+	
+	Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType","NamePlate","HeaderBackColor","Green")
+	Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType","NamePlate","HeaderForeColor","White")
+	Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType","NamePlate","ReadOnly",True)
+	Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType","NamePlate","AllowEdit",False)
+	Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType","NamePlate","Caption","Name Plate")
+	Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType","NamePlate","Width",180)
+	
+	Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType","Type","HeaderBackColor","Green")
+	Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType","Type","HeaderForeColor","White")
+	Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType","Type","ReadOnly",True)
+	Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType","Type","AllowEdit",False)
+	Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType","Type","Caption","Type")
+	Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType","Type","Visible",False)
+	
+	F.Intrinsic.Control.For(V.Local.i,1,60,1)
+		F.Intrinsic.String.Build("Text_Info_{0}",V.Local.i,V.Local.sField)
+		Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType",V.Local.sField,"HeaderBackColor","Green")
+		Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType",V.Local.sField,"HeaderForeColor","White")
+		Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType",V.Local.sField,"ReadOnly",True)
+		Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType",V.Local.sField,"AllowEdit",False)
+		Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType",V.Local.sField,"Caption",V.Local.sField)
+		Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType",V.Local.sField,"Visible",False)
+		Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType",V.Local.sField,"Width",180)
+	F.Intrinsic.Control.Next(V.Local.i)
+	
+	'If fired From Custom Hook add another column for editor button
+	F.Intrinsic.Control.If(V.Caller.Hook,=,12431)
+		Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType","Selection","HeaderBackColor","Green")
+		Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType","Selection","HeaderForeColor","White")
+		Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType","Selection","ReadOnly",True)
+		Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType","Selection","AllowEdit",False)
+		Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType","Selection","Caption"," ")
+		Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType","Selection","Visible",True)
+		Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType","Selection","Fixed","right")
+		Gui.FormNamePlate.GsGridControl2.ColumnEdit("GType","Selection","EditorButton","Select")
+	F.Intrinsic.Control.EndIf
+	
+	Gui.FormNamePlate.GsGridControl2.MainView("GType")
+	
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NP_Dashboard",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(FormNamePlate_UnLoad)
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.Set_Properties.End
+
+Program.Sub.GsGridControl1_RowCellClick.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	V.Local.sOrder.Declare(String,"")
+	V.Local.sGab.Declare(String,"")
+	V.Local.iRet.Declare(String,"")
+	V.Local.sNamePlate.Declare(String,"")
+	
+	F.Intrinsic.Control.SelectCase(V.Args.Column.UCase)
+		F.Intrinsic.Control.Case("SO_WO")
+			F.Intrinsic.Control.If(V.DataTable.NamePlate(V.Args.RowIndex).Record_Type!FieldValTrim,=,"A")
+				F.Intrinsic.Control.If(V.DataTable.NamePlate(V.Args.RowIndex).Order_Type!FieldValTrim,=,"WO")
+					F.Intrinsic.String.Split(V.DataTable.NamePlate(V.Args.RowIndex).SO_WO!FieldValTrim,"-",V.Local.sOrder)
+					V.Local.sOrder.RedimPreserve(0,1)
+					F.Intrinsic.String.Build("7!*!{0}!*!{1}!*!A",V.Local.sOrder(0),V.Local.sOrder(1),V.Local.sOrder)
+					F.Global.General.CallWrapperAsync(450000,V.Local.sOrder)
+				F.Intrinsic.Control.Else
+					F.Intrinsic.String.Split(V.DataTable.NamePlate(V.Args.RowIndex).SO_WO!FieldValTrim,"-",V.Local.sOrder)
+					F.Intrinsic.String.Build("{0}!*!V!*!*!*ZDR*!*",V.Local.sOrder,V.Local.sOrder)
+					F.Global.General.CallWrapperAsync(200000,V.Local.sOrder)
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.Else
+				F.Intrinsic.Control.If(V.DataTable.NamePlate(V.Args.RowIndex).Order_Type!FieldValTrim,=,"WO")
+					F.Intrinsic.String.Split(V.DataTable.NamePlate(V.Args.RowIndex).SO_WO!FieldValTrim,"-",V.Local.sOrder)
+					V.Local.sOrder.RedimPreserve(0,1)
+					F.Intrinsic.String.Build("7!*!{0}!*!{1}!*!H",V.Local.sOrder(0),V.Local.sOrder(1),V.Local.sOrder)
+					F.Global.General.CallWrapperAsync(450000,V.Local.sOrder)
+				F.Intrinsic.Control.Else
+					F.Intrinsic.String.Build("{0}!*!{1}",v.Local.sOrder,V.DataTable.NamePlate(V.Args.RowIndex).Customer!FieldValTrim,V.Local.sOrder)
+					F.Global.General.CallWrapperASync(7070,V.Local.sOrder)
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.EndIf
+			
+		F.Intrinsic.Control.Case("NAME_PLATE")
+			F.Intrinsic.String.Build("{0}\GCG_5546_NamePlate.g2u",V.Caller.GasDir,V.Local.sGab)
+'			F.Intrinsic.String.Build("C:\Projects\5546- EMC- Nameplate\GCG_5546_NamePlate.g2u",V.Caller.GasDir,V.Local.sGab)
+			F.Global.General.CallAsyncGAS(V.Local.sGab,V.DataTable.NamePlate(V.Args.RowIndex).Name_Plate!FieldValTrim,V.Local.iRet)
+			
+		F.Intrinsic.Control.Case("CUSTOMER")
+			F.Intrinsic.Control.If(V.DataTable.NamePlate(V.Args.RowIndex).Customer!FieldValTrim,<>,"")
+				F.Intrinsic.String.Build("V!*!!*!{0}",V.DataTable.NamePlate(V.Args.RowIndex).Customer!FieldValTrim,V.Local.sOrder)
+				F.Global.General.CallWrapperAsync(100000,V.Local.sOrder)
+			F.Intrinsic.Control.EndIf
+		
+		F.Intrinsic.Control.Case("SELECTION")
+			'committing nameplate back to core screen.
+			V.Local.sNamePlate.Set(V.DataTable.NamePlate(V.Args.RowIndex).Name_Plate!FieldValTrim)
+			F.Intrinsic.Control.If(V.Local.sNamePlate.Length,>,30)
+				V.Local.sNamePlate.RedimPreserve(0,1)
+				F.Intrinsic.String.Mid(V.Local.sNamePlate,31,30,V.Local.sNamePlate(1))
+				F.Intrinsic.String.Left(V.Local.sNamePlate,30,V.Local.sNamePlate(0))
+				V.Passed.000082.Set(V.Local.sNamePlate(0).Trim)
+				V.Passed.000084.Set(V.Local.sNamePlate(1).Trim)
+			F.Intrinsic.Control.Else
+				V.Passed.000082.Set(V.Local.sNamePlate.Trim)
+				V.Passed.000084.Set("")	
+			F.Intrinsic.Control.EndIf
+			
+			F.Intrinsic.Control.CallSub(FormNamePlate_UnLoad)
+			
+	F.Intrinsic.Control.EndSelect
+	
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NP_Dashboard",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(FormNamePlate_UnLoad)
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.GsGridControl1_RowCellClick.End
+
+Program.Sub.ddlType_Click.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	V.Local.i.Declare(Long,0)
+	V.Local.sSql.Declare(String,"")
+	V.Local.sType.Declare(String,"")
+	V.Local.sField.Declare(String,"")
+	V.Local.sCaption.Declare(String,"")
+	V.Local.sFilter.Declare(String,"")
+	
+	V.Local.sType.Set(V.Screen.FormNamePlate!ddlType.Text)
+	
+	F.Intrinsic.String.Build("Type = '{0}'",V.Local.sType,V.Local.sFilter)
+	
+	F.Intrinsic.String.Build("Select * From GCG_5546_NP_Fields Where Type = '{0}'",V.Local.sType.Trim,V.Local.sSql)
+	
+	F.ODBC.Connection!Con.OpenCompanyConnection
+	
+	F.Data.DataTable.CreateFromSQL("TempType","con",V.Local.sSql)
+	
+	F.ODBC.Connection!Con.Close
+	
+	F.Data.DataView.SetFilter("Type","VType",V.Local.sFilter)
+	
+	F.Intrinsic.Control.If(V.DataTable.TempType.RowCount--,<>,-1)
+		Gui.FormNamePlate.GsGridControl2.SuspendLayout
+		F.Intrinsic.Control.For(V.Local.i,1,60,1)
+			F.Intrinsic.String.Build("Text_Info_{0}",V.Local.i,V.Local.sField)
+			V.Local.sCaption.Set(V.DataTable.TempType(V.DataTable.TempType.RowCount--).[V.Local.sField]!FieldValTrim)
+			F.Intrinsic.Control.If(V.Local.sCaption.Trim,<>,"")
+				Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType",V.Local.sField,"Caption",V.Local.sCaption.Trim)
+				Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType",V.Local.sField,"Visible",True)
+			F.Intrinsic.Control.Else
+				Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType",V.Local.sField,"Caption",V.Local.sField)
+				Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType",V.Local.sField,"Visible",False)
+			F.Intrinsic.Control.EndIf
+		F.Intrinsic.Control.Next(V.Local.i)
+		Gui.FormNamePlate.GsGridControl2.ResumeLayout
+	F.Intrinsic.Control.Else
+		Gui.FormNamePlate.GsGridControl2.SuspendLayout
+		F.Intrinsic.Control.For(V.Local.i,1,60,1)
+			F.Intrinsic.String.Build("Text_Info_{0}",V.Local.i,V.Local.sField)
+			Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType",V.Local.sField,"Caption",V.Local.sField)
+			Gui.FormNamePlate.GsGridControl2.SetColumnProperty("GType",V.Local.sField,"Visible",False)
+		F.Intrinsic.Control.Next(V.Local.i)
+		Gui.FormNamePlate.GsGridControl2.ResumeLayout
+	F.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NP_Dashboard",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(FormNamePlate_UnLoad)
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.ddlType_Click.End
+
+Program.Sub.GsGridControl2_RowCellClick.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	V.Local.sNamePlate.Declare(String,"")
+	
+	F.Intrinsic.Control.If(V.Args.Column.UCase,=,"SELECTION")
+		'committing nameplate back to core screen.
+		V.Local.sNamePlate.Set(V.DataView.Type!VType(V.Args.RowIndex).NamePlate!FieldValTrim)
+		F.Intrinsic.Control.If(V.Local.sNamePlate.Length,>,30)
+			V.Local.sNamePlate.RedimPreserve(0,1)
+			F.Intrinsic.String.Mid(V.Local.sNamePlate,31,30,V.Local.sNamePlate(1))
+			F.Intrinsic.String.Left(V.Local.sNamePlate,30,V.Local.sNamePlate(0))
+			V.Passed.000082.Set(V.Local.sNamePlate(0).Trim)
+			V.Passed.000084.Set(V.Local.sNamePlate(1).Trim)
+		F.Intrinsic.Control.Else
+			V.Passed.000082.Set(V.Local.sNamePlate.Trim)
+			V.Passed.000084.Set("")	
+		F.Intrinsic.Control.EndIf
+		
+		F.Intrinsic.Control.CallSub(FormNamePlate_UnLoad)
+	F.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_5546_NP_Dashboard",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(FormNamePlate_UnLoad)
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.GsGridControl2_RowCellClick.End
