@@ -1,0 +1,71 @@
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	V.Local.sUser.Declare(String,"")
+	V.Local.sSql.Declare(String,"")
+
+	F.Intrinsic.Control.SelectCase(V.Caller.Hook)
+		'gen wo from so line
+		F.Intrinsic.Control.Case(12340)	
+			F.Intrinsic.String.Build("{0}*!*{1}",V.Passed.000082.Trim,V.Passed.000084.Trim,V.Local.sUser)
+			V.Passed.Global.Set(V.Local.sUser.Trim)
+		
+		F.Intrinsic.Control.Case(16790)		
+			F.Intrinsic.Control.If(V.Passed.Global.Trim,<>,"This variable will retain its value through out the thread","AND",V.Passed.Global.Trim,<>,"")
+				F.ODBC.Connection!Con.OpenCompanyConnection
+				F.Intrinsic.String.Build("Select Job, Suffix, User_3, User_4 From WO_User_Flds Where Job = '{0}' and Suffix = '{1}'",V.Passed.009000.Trim,V.Passed.009001.Trim,V.Local.sSql)
+				F.Data.DataTable.CreateFromSQL("User","con",V.Local.sSql,True)
+				
+				F.Intrinsic.Control.If(V.DataTable.User.RowCount--,=,-1)
+					F.Intrinsic.Control.If(V.Passed.Global.Trim,<>,"")
+						F.Intrinsic.String.Split(V.Passed.Global.Trim,"*!*",V.Local.sUser)
+						V.Local.sUser.RedimPreserve(0,1)
+						F.Data.DataTable.AddRow("User","Job",V.Passed.009000.Trim,"Suffix",V.Passed.009001.Trim,"User_3",V.Local.sUser(0).Trim,"User_4",V.Local.sUser(1).Trim)
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.Else
+					F.Intrinsic.Control.If(V.Passed.Global.Trim,<>,"")
+						F.Intrinsic.String.Split(V.Passed.Global.Trim,"*!*",V.Local.sUser)
+						V.Local.sUser.RedimPreserve(0,1)
+						F.Data.DataTable.SetValue("User","User_3",V.Local.sUser(0).Trim,"User_4",V.Local.sUser(1).Trim)
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.EndIf
+				
+				F.Intrinsic.Control.If(V.DataTable.User.RowCount--,<>,-1)
+					F.Data.DataTable.SaveToDB("User","con","WO_User_Flds","Job*!*Suffix",256,"Job@!@Job*!*Suffix@!@Suffix*!*User_3@!@User_3*!*User_4@!@User_4")
+				F.Intrinsic.Control.EndIf
+				
+				F.ODBC.Connection!Con.Close
+			F.Intrinsic.Control.EndIf
+			
+	F.Intrinsic.Control.EndSelect
+
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(Exit)
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.Exit.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String)
+
+	F.Intrinsic.Control.End
+	
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.End
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.Exit.End
